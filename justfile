@@ -1,11 +1,14 @@
 # Public gateway to the cli/ hub: `just <action> <target> [...args]`.
-# Each action runs cli/<action>.nu; omit the target to list them.
+# cli/main.nu runs cli/<target>/<action>.nu; omit the target to list them.
+# Recipes are nushell scripts, so arguments reach the actions untouched.
 
-set shell := ["nu", "-c"]
+set positional-arguments
+set script-interpreter := ["nu"]
 
 [private]
+[script]
 default:
-    @just --list
+    just --list
 
 # Create a <target>; omit it to list targets.
 create target="--help" *args:
