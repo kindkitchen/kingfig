@@ -10,6 +10,37 @@ set script-interpreter := ["nu"]
 default:
     just --list
 
-# Create a <target>; omit it to list targets.
-create target="--help" *args:
-    nu cli/create.nu {{target}} {{args}}
+# Check a target.
+[script]
+check target="" *args:
+    def --wrapped main [...args] { nu cli/main.nu check ...$args }
+
+# Set the config of a target.
+[script]
+config-set target="" *args:
+    def --wrapped main [...args] { nu cli/main.nu config-set ...$args }
+
+# Create a target.
+[script]
+create target="" *args:
+    def --wrapped main [...args] { nu cli/main.nu create ...$args }
+
+# Remove a target.
+[script]
+remove target="" *args:
+    def --wrapped main [...args] { nu cli/main.nu remove ...$args }
+
+# Retrieve a target.
+[script]
+retrieve target="" *args:
+    def --wrapped main [...args] { nu cli/main.nu retrieve ...$args }
+
+# Show the status of a target.
+[script]
+status target="" *args:
+    def --wrapped main [...args] { nu cli/main.nu status ...$args }
+
+# Test a target.
+[script]
+test target="" *args:
+    def --wrapped main [...args] { nu cli/main.nu test ...$args }
