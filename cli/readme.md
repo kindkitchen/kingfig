@@ -2,11 +2,12 @@
 
 Nushell scripts supporting the whole project. The root `justfile` is their public gateway: `just <action> <target> [...args]` runs `cli/<target>/<action>.nu [...args]` through `cli/main.nu`.
 
-Explore: `just` lists actions, `just <action>` lists its targets, `just <action> <target> --help` explains one.
+Explore: `just` lists actions and targets, `just <action>` lists its targets, `just <target>` its actions, `just <action> <target> --help` explains one.
 
 ## Conventions
 
 - One folder per feature (target), one script per action: `cli/<target>/<action>.nu` with a `def main`. Code shared by a feature's actions stays in its folder.
+- A feature also gets a recipe in the justfile's `targets` group, for `just <target>`: `just` rejects unknown recipes before any script runs. Target and action names never repeat each other, as both are recipes.
 - Illustrative code: easy to read and to learn from.
 - Rich doc comments on every command, parameter and flag, plus `@example`s, so `--help` explains each script.
 - Data goes to stdout through `emit.nu`: a table in a terminal, JSON when piped. Messages go to stderr.

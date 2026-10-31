@@ -28,7 +28,7 @@ Organized as a monorepo by conventions only: no monorepo tool, neither third-par
 
 - Nushell is the first-class shell language: for scripts, commands and examples.
 - `justfile` is the public gateway to all functionality of the `cli/` hub: nushell scripts following `cli/readme.md`.
-- Commands form a tree, mostly 3 levels deep: `just <action> <target> [...args]`. The action is a general verb, overloaded by the target.
+- Commands form a tree, mostly 3 levels deep: `just <action> <target> [...args]`. The action is a general verb, overloaded by the target. `just <target>` lists the actions of a target.
 - Features are the targets: `cli/<target>/`, one script per action.
 - Create a sub-project with `just create submodule --name=<name> --apply`.
 - Code-review comments are notes marked in any file, so a place in the code speaks for itself: `cli/code-review/readme.md`.

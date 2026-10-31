@@ -3,10 +3,11 @@ use ../emit.nu
 
 # Test code-review end to end in a throwaway repository.
 #
-# Copies cli/ and the justfile into a temporary git repository with a submodule,
-# writes fixtures using the configured markers (so no marker is written here),
-# runs the `just <action> code-review` commands there and compares their output
-# with what the rules expect. Exits with 1 when a case fails.
+# Copies cli/ and the justfile into a temporary git repository with a submodule
+# and hides them from the scans, so only the fixtures count. Writes the fixtures
+# with the configured markers (so no marker is written here), runs the
+# `just <action> code-review` commands there and compares their output with
+# what the rules expect. Exits with 1 when a case fails.
 @example "run the tests" { just test code-review }
 def main [] {
     let m = lib markers
@@ -33,6 +34,10 @@ def fixtures [m: record, origin: string] {
     let x = $m.marker-meta
     let w = $x | str length -g
     ^git init --quiet
+    # The copied tools are no fixtures: comments in them must not count.
+    let exclude = ^git rev-parse --git-path info/exclude
+    mkdir ($exclude | path dirname)
+    "/cli/\n/justfile\n" | save --append $exclude
     # The spec's two examples, as they were given.
     [
         $"          /* ($s)" "hello" $"(pad 54)($x)" $"(pad (54 + $w))value=67" $"(pad (54 + $w))examples=true" "" ""
